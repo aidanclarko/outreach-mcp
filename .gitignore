@@ -1,0 +1,19 @@
+# env - never commit keys
+.env
+
+# resume - personal info
+resume.pdf
+
+# database - local data
+*.db
+
+# node
+node_modules/
+dist/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# logs
+*.log
