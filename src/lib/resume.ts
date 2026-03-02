@@ -1,12 +1,13 @@
 import fs from 'fs'
+import { PDFParse } from 'pdf-parse'
 import {ai, model } from "./handleAI"
 
 export default async function extractResume(): Promise<any> {
   try {
-    const pdfParse = require('pdf-parse')
     const buffer = fs.readFileSync('./resume.pdf')
-    const pdf = await pdfParse(buffer)
-    const res: string = pdf.text.toString()
+    const parser = new PDFParse({ data: new Uint8Array(buffer) })
+    const pdf = await parser.getText()
+    const res: string = pdf.text
     
     const response = await ai.chat.completions.create({
       model: model,

@@ -1,10 +1,10 @@
 import extractResume from "../lib/resume"
 import { client } from "../db/client"
 
-export async function profileTool() {
+export async function profileTool(_args: Record<string, never>) {
   try {
     const result = await extractResume()
-    
+
     client.run(
       `INSERT OR REPLACE INTO profile (name, email, skills, experience_years, target_role, summary)
        VALUES (?, ?, ?, ?, ?, ?)`,
@@ -13,7 +13,7 @@ export async function profileTool() {
 
     return {
       content: [{
-        type: 'text',
+        type: 'text' as const,
         text: `Profile saved!\nName: ${result.name}\nRole: ${result.target_role}\nSkills: ${result.skills.join(', ')}`
       }]
     }
@@ -21,7 +21,7 @@ export async function profileTool() {
   } catch (err) {
     return {
       content: [{
-        type: 'text',
+        type: 'text' as const,
         text: `Failed to parse resume: ${err}`
       }]
     }
